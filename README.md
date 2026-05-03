@@ -11,14 +11,12 @@ Cílem je vytvořit model pro binární klasifikaci, který odhadne šanci na ú
 * `dataprocessing.html` - Export notebooku pro prohlížení bez nutnosti spouštět kód.
 * `benchmark.ipynb` - Notebook s naivním a ML benchmarkem (logistická regrese), vyhodnocený na validační sadě (F1-score, Brier score).
 * `benchmark.html` - Export benchmark notebooku.
-* `data/` - Složka obsahující výsledné datové sady (`train.csv`, `validation.csv`, `test.csv`).
 
 ## Poznámka k datům a reprodukovatelnosti
-Původní dataset z platformy Kaggle (`ks-projects-201801.csv`) obsahuje přes 300 000 záznamů a má velikost cca 58 MB. Z důvodu velikosti není tento zdrojový soubor přímo nahrán v repozitáři (dle povolené výjimky v zadání HW2). 
+Původní dataset z platformy Kaggle (`ks-projects-201801.csv`) obsahuje přes 300 000 záznamů a má velikost cca 58 MB. Z důvodu velikosti není tento zdrojový soubor fyzicky nahrán v repozitáři (v souladu s povolenou výjimkou v zadání HW2). 
 
-Zpracované a rozdělené datové sady (train, validation, test) jsou však k dispozici ve složce `data/`.
+Aby byla zaručena 100% reprodukovatelnost bez nutnosti manuálního stahování velkých souborů, **oba notebooky obsahují kód (využívající knihovnu `gdown`), který si při spuštění automaticky stáhne potřebný dataset** přímo z mého Google Drive. `benchmark.ipynb` je navíc napsán zcela nezávisle a provádí bleskovou reprodukci přípravy dat i splitu z prvního notebooku.
 
-**Jak spustit kód:**
-1. Pro úplnou reprodukci stáhněte původní dataset z Kaggle a vložte jej do hlavní složky.
-2. Spusťte `dataprocessing.ipynb`. Tento notebook data očistí od průběhových (leakage) proměnných, rozdělí je chronologicky a vytvoří preprocesingová pravidla výhradně na trénovací sadě.
-3. Následně spusťte `benchmark.ipynb`, který na těchto datech natrénuje a vyhodnotí referenční modely.
+**Jak spustit kód (doporučeno např. v Google Colab):**
+1. Spusťte `dataprocessing.ipynb`. Notebook si sám do paměti stáhne původní dataset, očistí jej od leakage proměnných, rozdělí chronologicky na sady a vytvoří preprocessing pravidla výhradně na trénovacích datech.
+2. Následně spusťte `benchmark.ipynb`. Notebook si opět sám stáhne data, provede čistý split a natrénuje a vyhodnotí referenční modely na validační sadě.
